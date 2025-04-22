@@ -1,4 +1,6 @@
-
+<p align="center">
+  <img src="./luciole.png" alt="Logo Luciole" width="200"/>
+</p>
 # 🔥 Luciole – Assistant de Terminal Intelligent pour Linux & Cybersécurité
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

@@ -1,17 +1,17 @@
-# Foxi : Assistant de Terminal Intelligent Linux & Cybersécurité
+# Luciole : Assistant de Terminal Intelligent Linux & Cybersécurité
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) Foxi est un assistant de terminal intelligent conçu pour les utilisateurs Linux (ou WSL), en particulier ceux intéressés par la cybersécurité (pentest, OSINT). Propulsé par un modèle de langage local via Ollama, Foxi transforme votre interaction avec la ligne de commande pour la rendre plus efficace, informative et intuitive.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) Luciole est un assistant de terminal intelligent conçu pour les utilisateurs Linux (ou WSL), en particulier ceux intéressés par la cybersécurité (pentest, OSINT). Propulsé par un modèle de langage local via Ollama, Luciole transforme votre interaction avec la ligne de commande pour la rendre plus efficace, informative et intuitive.
 
 ## Fonctionnalités Clés
 
 * **Deux Modes d'Interaction :**
-    * **Mode Commande (`Commande >`) :** Exécutez vos commandes Linux habituelles. Foxi fournit :
+    * **Mode Commande (`Commande >`) :** Exécutez vos commandes Linux habituelles. Luciole fournit :
         * Une analyse contextuelle des résultats par l'IA (explication simple, alternatives, considérations de sécurité pour certains outils comme `nmap`).
         * Des réponses directes et concises pour les commandes simples réussies (`ls`, `pwd`, `whoami`, `echo ... | xxd -r -p`).
         * Gestion correcte de la commande `cd`.
     * **Mode Langage Naturel (`Parlez >`) :** Communiquez vos intentions en français.
-        * **Traduction en Commandes :** Demandez une action ("compte les fichiers", "utilise sherlock sur user123") et Foxi tente de générer la commande correspondante.
-        * **Suggestion d'Outils :** Demandez quel outil utiliser pour une tâche OSINT/Pentest ("quel outil pour trouver les sous-domaines ?") et Foxi vous suggérera des options avec exemples.
+        * **Traduction en Commandes :** Demandez une action ("compte les fichiers", "utilise sherlock sur user123") et Luciole tente de générer la commande correspondante.
+        * **Suggestion d'Outils :** Demandez quel outil utiliser pour une tâche OSINT/Pentest ("quel outil pour trouver les sous-domaines ?") et Luciole vous suggérera des options avec exemples.
         * **Confirmation de Sécurité :** Demande votre accord avant d'exécuter des commandes générées jugées potentiellement dangereuses (`rm`, `sudo`...).
 
 * **Confort d'Utilisation :**
@@ -27,11 +27,11 @@
 * La bibliothèque Python `requests` : `pip install requests`
 * **Ollama installé et fonctionnel** : [Voir le site officiel d'Ollama](https://ollama.com/)
     * Au moins un modèle téléchargé (ex: `ollama pull mistral`)
-    * Le service Ollama doit être **lancé** (ex: `ollama serve &` ou en lançant `ollama run mistral` dans un autre terminal). Foxi s'attend à le trouver sur `http://localhost:11434`.
+    * Le service Ollama doit être **lancé** (ex: `ollama serve &` ou en lançant `ollama run mistral` dans un autre terminal). Luciole s'attend à le trouver sur `http://localhost:11434`.
 
 ## Installation
 
-1.  **Clonez le dépôt (ou téléchargez le fichier `foxi.py`) :**
+1.  **Clonez le dépôt (ou téléchargez le fichier `Luciole.py`) :**
     ```bash
     git clone <URL_de_votre_depot_github>
     cd <nom_du_dossier_du_depot>
@@ -46,9 +46,9 @@
 
 ## Utilisation
 
-1.  **Lancez Foxi :**
+1.  **Lancez Luciole :**
     ```bash
-    python3 foxi.py
+    python3 Luciole.py
     ```
 2.  **Choisissez le modèle Ollama** que vous souhaitez utiliser (ex: `mistral`).
 3.  **Interagissez :**

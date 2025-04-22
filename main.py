@@ -8,6 +8,7 @@ from collections import deque # <--- Pour l'historique de contexte
 
 # Importer les modules du projet
 import config as cfg
+# Assure-toi que config.py contient la liste cfg.SECURITY_TOOLS
 from history_manager import setup_history, add_history_entry
 from shell_utils import execute_command, change_directory
 from ollama_client import get_ollama_analysis, get_command_from_natural_language
@@ -102,7 +103,7 @@ def main():
                 # Appel à Ollama pour traduction (passe maintenant l'historique)
                 generated_command = get_command_from_natural_language(
                     user_input, model_to_use,
-                    conversation_history=conversation_history # <-- Argument ajouté
+                    conversation_history=conversation_history # <-- Argument historique passé
                 )
                 if generated_command:
                     print(f"{cfg.COLOR_YELLOW}Commande suggérée : {generated_command}{cfg.COLOR_RESET}")
@@ -146,7 +147,8 @@ def main():
                 use_ollama = True
                 direct_analysis_output = None
 
-                if is_successful: # Analyse directe uniquement si succès
+                # Vérifie les cas d'analyse directe sans Ollama (uniquement si succès)
+                if is_successful:
                     if executed_command in cfg.SIMPLE_COMMANDS:
                          if executed_command == "pwd": direct_analysis_output = f"{cfg.COLOR_BLUE}Vous êtes actuellement dans le dossier : {stdout.strip()}{cfg.COLOR_RESET}"
                          elif executed_command == "whoami": direct_analysis_output = f"{cfg.COLOR_BLUE}Vous êtes connecté en tant que : {stdout.strip()}{cfg.COLOR_RESET}"
@@ -155,16 +157,22 @@ def main():
                          direct_analysis_output = f"{cfg.COLOR_BLUE}Le résultat décodé (echo | xxd -r -p) est :\n{stdout.strip()}{cfg.COLOR_RESET}"
                          use_ollama = False
 
+                # Si on doit utiliser Ollama pour l'analyse
                 if use_ollama:
-                    prompt_type = "detailed"
-                    # Utiliser le prompt simple pour 'ls' réussi
-                    if (executed_command == cfg.LS_COMMAND or executed_command.startswith(cfg.LS_COMMAND + " ")) and is_successful:
-                         prompt_type = "simple_ls"
+                    # Déterminer le type de prompt (sécurité, simple ls, ou détaillé)
+                    prompt_type = "detailed" # Type par défaut
+                    base_command = executed_command.split('|')[0].strip().split(' ')[0]
 
-                    # Appel à Ollama pour analyse (passe maintenant l'historique)
+                    if base_command in cfg.SECURITY_TOOLS:
+                        prompt_type = "security_analysis" # Priorité à l'analyse sécurité
+                    elif (executed_command == cfg.LS_COMMAND or executed_command.startswith(cfg.LS_COMMAND + " ")) and is_successful:
+                        prompt_type = "simple_ls" # Sinon, prompt simple pour ls réussi
+                    # Sinon, prompt_type reste "detailed"
+
+                    # Appel à Ollama pour analyse (passe maintenant l'historique et le type de prompt)
                     analysis_result = get_ollama_analysis(
                         executed_command, stdout, stderr, model_to_use, prompt_type=prompt_type,
-                        conversation_history=conversation_history # <-- Argument ajouté
+                        conversation_history=conversation_history # <-- Argument historique passé
                     )
                     print_analysis(analysis_result) # Gère l'affichage (stream ou erreur)
                 else:

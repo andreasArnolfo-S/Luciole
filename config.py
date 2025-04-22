@@ -42,3 +42,20 @@ DANGEROUS_KEYWORDS = [
 SIMPLE_COMMANDS = ["pwd", "whoami"]
 LS_COMMAND = "ls" # Spécifiquement pour le prompt simple
 ECHO_XXD_PIPE = "echo | xxd -r -p" # Détection de cette séquence spécifique
+
+# --- AJOUT : Liste des commandes d'outils de sécurité courants ---
+# (À enrichir au besoin)
+SECURITY_TOOLS = [
+    'nmap', 'masscan', 'gobuster', 'feroxbuster', 'dirb', 'wfuzz',
+    'sqlmap', 'nikto', 'whatweb', 'wafw00f',
+    'msfconsole', 'msfvenom',
+    'hydra', 'john', 'hashcat',
+    'subfinder', 'assetfinder', 'amass', 'httpx', 'nuclei',
+    'searchsploit', 'enum4linux', 'smbclient', 'smbmap', 'rpcclient',
+    'aircrack-ng', 'airodump-ng', 'reaver', 'bully',
+    'burpsuite', 'zaproxy', # Moins CLI mais contextuellement utiles
+    'whois', 'dnsrecon', 'fierce',
+    'metagoofil', 'sherlock', # OSINT
+    # Ajouter d'autres outils pertinents...
+]
+# --- FIN AJOUT ---

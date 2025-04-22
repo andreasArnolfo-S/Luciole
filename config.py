@@ -1,0 +1,44 @@
+# -*- coding: utf-8 -*-
+# config.py : Constantes et configuration pour Foxi
+
+import os
+
+# --- Constantes pour les couleurs ANSI ---
+COLOR_RESET = "\033[0m"
+COLOR_BLUE = "\033[94m"    # Pour l'analyse Ollama / réponses directes
+COLOR_GREEN = "\033[92m"   # Pour stdout et le prompt
+COLOR_YELLOW = "\033[93m"  # Pour les messages d'exécution / infos
+COLOR_RED = "\033[91m"      # Pour stderr et les erreurs
+COLOR_CYAN = "\033[96m"     # Pour les en-têtes de section / prompt dossier
+COLOR_MAGENTA = "\033[95m" # Pour le prompt mode naturel
+COLOR_BOLD = "\033[1m"
+
+# --- Configuration de l'historique ---
+HISTFILE = os.path.expanduser("~/.foxi_history") # Chemin du fichier d'historique
+HISTSIZE = 1000                                  # Nombre maximum de lignes à conserver
+
+# --- Configuration Ollama ---
+OLLAMA_API_URL = "http://localhost:11434/api/generate"
+DEFAULT_MODEL = "mistral"
+OLLAMA_TIMEOUT_ANALYSIS = 90  # Timeout pour les requêtes d'analyse (secondes)
+OLLAMA_TIMEOUT_TRANSLATE = 60 # Timeout pour les requêtes de traduction (secondes)
+
+# --- Prompt Système pour Ollama ---
+SYSTEM_PROMPT = """Tu es Foxi, un assistant expert en ligne de commande Linux et spécialisé en cybersécurité. Ton but est d'aider l'utilisateur.
+- En mode commande, analyse les résultats, explique-les clairement (surtout les erreurs), et suggère des commandes alternatives pertinentes ou des commandes de suivi. Pour les outils de sécurité comme nmap, essaie d'identifier les informations critiques (ports ouverts, versions, vulnérabilités potentielles si évidentes). Sois concis pour les commandes très simples réussies (ls, pwd, whoami).
+- En mode naturel, traduis la demande de l'utilisateur en une commande shell Linux unique et exécutable. Si la demande mentionne un outil spécifique (comme nmap, sherlock, etc.), génère la commande pour utiliser cet outil avec les arguments extraits de la demande. Réponds UNIQUEMENT avec la commande ou 'CMD_ERROR' si tu ne peux pas ou si c'est ambigu/dangereux.
+Sois précis, technique et fiable."""
+
+# --- Mots-clés pour commandes dangereuses ---
+# (Préfixés ou contenant des espaces pour éviter les faux positifs, ex: 'arm' != 'rm ')
+DANGEROUS_KEYWORDS = [
+    'rm ', 'mv ', 'dd ', 'sudo ', 'chmod ', 'chown ', ' mkfs',
+    ':(){:|:&};:', # Fork bomb
+    ' > /dev/sd', # Écraser un disque
+    ' > /dev/null' # Peut être dangereux si mal utilisé avec des commandes critiques
+]
+
+# --- Commandes Simples avec gestion directe ---
+SIMPLE_COMMANDS = ["pwd", "whoami"]
+LS_COMMAND = "ls" # Spécifiquement pour le prompt simple
+ECHO_XXD_PIPE = "echo | xxd -r -p" # Détection de cette séquence spécifique

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# config.py : Constantes et configuration pour Foxi
+# config.py : Constantes et configuration pour Luciole
 
 import os
 
@@ -19,12 +19,12 @@ HISTSIZE = 1000                                  # Nombre maximum de lignes à c
 
 # --- Configuration Ollama ---
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
-DEFAULT_MODEL = "mistral"
+DEFAULT_MODEL = "codellama"
 OLLAMA_TIMEOUT_ANALYSIS = 90  # Timeout pour les requêtes d'analyse (secondes)
 OLLAMA_TIMEOUT_TRANSLATE = 60 # Timeout pour les requêtes de traduction (secondes)
 
 # --- Prompt Système pour Ollama ---
-SYSTEM_PROMPT = """Tu es Foxi, un assistant expert en ligne de commande Linux et spécialisé en cybersécurité. Ton but est d'aider l'utilisateur en tenant compte de l'historique de la conversation fourni.
+SYSTEM_PROMPT = """Tu es Luciole, un assistant expert en ligne de commande Linux et spécialisé en cybersécurité. Ton but est d'aider l'utilisateur en tenant compte de l'historique de la conversation fourni.
 - En mode commande, analyse les résultats de la commande la plus récente à la lumière des interactions précédentes. Explique-les clairement (surtout les erreurs), et suggère des commandes alternatives pertinentes ou des commandes de suivi basées sur le contexte. Pour les outils de sécurité comme nmap, essaie d'identifier les informations critiques. Sois concis pour les commandes très simples réussies.
 - En mode naturel, traduis la demande de l'utilisateur en une commande shell Linux unique et exécutable, en utilisant l'historique pour résoudre les références (ex: 'le fichier précédent'). Si la demande mentionne un outil spécifique, génère la commande pour cet outil. Réponds UNIQUEMENT avec la commande ou 'CMD_ERROR' si tu ne peux pas ou si c'est ambigu/dangereux.
 Sois précis, technique et fiable."""
